@@ -1,0 +1,45 @@
+name: Test OPAM-package installation on trunk
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Pre-setup (cache prefix)
+        id: presetup
+        run: |
+          cache_prefix="$(git ls-remote https://github.com/ocaml/ocaml.git refs/heads/trunk | cut -f 1 | head -n 1)"
+          echo "cache_prefix=$cache_prefix" >> "$GITHUB_OUTPUT"
+          cat "$GITHUB_OUTPUT"
+
+      - name: Install OCaml trunk compiler
+        uses: ocaml/setup-ocaml@v2
+        with:
+          ocaml-compiler: 'ocaml-variants.5.2.0+trunk'
+          cache-prefix: ${{ steps.presetup.outputs.cache_prefix }}
+
+      - name: Install dependencies
+        run: |
+          opam depext -yt qcheck qcheck-core qcheck-ounit qcheck-alcotest
+          opam install . --deps-only --with-test
+
+      - name: Show configuration and clean up
+        run: |
+          opam exec -- ocamlc -config
+          opam config list
+          opam exec -- dune printenv
+          opam list
+
+      - name: Build
+        run: opam exec -- dune build
+
+      - name: Test
+        run: opam exec -- dune runtest
+
+      - name: Install the OPAM packages
+        run: opam install . --with-test
