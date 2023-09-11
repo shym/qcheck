@@ -1,4 +1,4 @@
-name: Test OPAM-package installation on trunk
+name: Test qcheck-core installation on trunk
 
 on: [push, pull_request]
 
@@ -22,11 +22,12 @@ jobs:
         with:
           ocaml-compiler: 'ocaml-variants.5.2.0+trunk'
           cache-prefix: ${{ steps.presetup.outputs.cache_prefix }}
+          opam-pin: false
+          opam-depext: false
 
       - name: Install dependencies
         run: |
-          opam depext -yt qcheck qcheck-core qcheck-ounit qcheck-alcotest
-          opam install . --deps-only --with-test
+          opam install ./qcheck-core.opam --deps-only --with-test
 
       - name: Show configuration and clean up
         run: |
@@ -41,5 +42,5 @@ jobs:
       - name: Test
         run: opam exec -- dune runtest
 
-      - name: Install the OPAM packages
-        run: opam install . --with-test
+      - name: Install the OPAM package
+        run: opam install ./qcheck-core.opam --with-test
