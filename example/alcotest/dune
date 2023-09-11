@@ -1,26 +1,26 @@
 (rule
  (enabled_if (and (= %{arch_sixtyfour} true) (>= %{ocaml_version} 5)))
- (action (copy QCheck_alcotest_test.expected.ocaml5.64 QCheck_alcotest_test.expected)))
+ (action (copy qCheck_alcotest_test.expected.ocaml5.64 qCheck_alcotest_test.expected)))
 
 (rule
  (enabled_if (and (= %{arch_sixtyfour} false) (>= %{ocaml_version} 5)))
- (action (copy QCheck_alcotest_test.expected.ocaml5.32 QCheck_alcotest_test.expected)))
+ (action (copy qCheck_alcotest_test.expected.ocaml5.32 qCheck_alcotest_test.expected)))
 
 (rule
  (enabled_if (and (= %{arch_sixtyfour} true) (< %{ocaml_version} 5)))
- (action (copy QCheck_alcotest_test.expected.ocaml4.64 QCheck_alcotest_test.expected)))
+ (action (copy qCheck_alcotest_test.expected.ocaml4.64 qCheck_alcotest_test.expected)))
 
 (rule
  (enabled_if (and (= %{arch_sixtyfour} false) (< %{ocaml_version} 5)))
- (action (copy QCheck_alcotest_test.expected.ocaml4.32 QCheck_alcotest_test.expected)))
+ (action (copy qCheck_alcotest_test.expected.ocaml4.32 qCheck_alcotest_test.expected)))
 
 (executable
- (name QCheck_alcotest_test)
+ (name qCheck_alcotest_test)
  (libraries qcheck-core qcheck-alcotest alcotest))
 
 (rule
- (targets QCheck_alcotest_test.output)
- (deps ./QCheck_alcotest_test.exe)
+ (targets qCheck_alcotest_test.output)
+ (deps ./qCheck_alcotest_test.exe)
  (enabled_if (= %{os_type} "Unix"))
  (action
   (with-accepted-exit-codes 1
@@ -33,4 +33,4 @@
  (alias runtest)
  (package qcheck-alcotest)
  (enabled_if (= %{os_type} "Unix"))
- (action (diff QCheck_alcotest_test.expected QCheck_alcotest_test.output)))
+ (action (diff qCheck_alcotest_test.expected qCheck_alcotest_test.output)))

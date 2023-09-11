@@ -2,7 +2,7 @@
 
 # custom script to run qcheck-ounit and filter non reproducible parts
 
-OUT=`./QCheck_ounit_test.exe $@`
+OUT=`./qCheck_ounit_test.exe $@`
 CODE=$?
 
 # remove non deterministic output

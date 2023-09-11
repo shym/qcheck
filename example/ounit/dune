@@ -1,26 +1,26 @@
 (executables
- (names QCheck_ounit_test QCheck_test)
+ (names qCheck_ounit_test qCheck_test)
  (libraries ounit2 qcheck-ounit))
 
 (rule
  (enabled_if (and (= %{arch_sixtyfour} true) (>= %{ocaml_version} 5)))
- (action (copy QCheck_ounit_test.expected.ocaml5.64 QCheck_ounit_test.expected)))
+ (action (copy qCheck_ounit_test.expected.ocaml5.64 qCheck_ounit_test.expected)))
 
 (rule
  (enabled_if (and (= %{arch_sixtyfour} false) (>= %{ocaml_version} 5)))
- (action (copy QCheck_ounit_test.expected.ocaml5.32 QCheck_ounit_test.expected)))
+ (action (copy qCheck_ounit_test.expected.ocaml5.32 qCheck_ounit_test.expected)))
 
 (rule
  (enabled_if (and (= %{arch_sixtyfour} true) (< %{ocaml_version} 5)))
- (action (copy QCheck_ounit_test.expected.ocaml4.64 QCheck_ounit_test.expected)))
+ (action (copy qCheck_ounit_test.expected.ocaml4.64 qCheck_ounit_test.expected)))
 
 (rule
  (enabled_if (and (= %{arch_sixtyfour} false) (< %{ocaml_version} 5)))
- (action (copy QCheck_ounit_test.expected.ocaml4.32 QCheck_ounit_test.expected)))
+ (action (copy qCheck_ounit_test.expected.ocaml4.32 qCheck_ounit_test.expected)))
 
 (rule
- (targets QCheck_ounit_test.output)
- (deps ./QCheck_ounit_test.exe)
+ (targets qCheck_ounit_test.output)
+ (deps ./qCheck_ounit_test.exe)
  (enabled_if (= %{os_type} "Unix"))
  (action
   (with-accepted-exit-codes 1
@@ -31,4 +31,4 @@
  (alias runtest)
  (package qcheck-ounit)
  (enabled_if (= %{os_type} "Unix"))
- (action (diff QCheck_ounit_test.expected QCheck_ounit_test.output)))
+ (action (diff qCheck_ounit_test.expected qCheck_ounit_test.output)))
