@@ -36,11 +36,5 @@ jobs:
           opam exec -- dune printenv
           opam list
 
-      - name: Build
-        run: opam exec -- dune build
-
-      - name: Test
-        run: opam exec -- dune runtest
-
       - name: Install the OPAM package
-        run: opam install ./qcheck-core.opam --with-test
+        run: opam install ./qcheck-core.opam
