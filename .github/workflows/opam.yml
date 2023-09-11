@@ -27,7 +27,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          opam install ./qcheck-core.opam --deps-only --with-test
+          opam install ./qcheck-core.opam --deps-only
 
       - name: Show configuration and clean up
         run: |
